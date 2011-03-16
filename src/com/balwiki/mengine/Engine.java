@@ -42,7 +42,7 @@ public abstract class Engine extends JFrame implements KeyListener {
 	 * Keys contains the status of the keyboard, indexed by KeyEvent.VK 
 	 * integer values. True means a key is down; false means it is up.
 	 */
-	public boolean[] keys = new boolean[65535];
+	public boolean[] keys = new boolean[65536];
 	
 	/**
 	 * Creates the screen and buffer, hooks into the keyboard, initializes
