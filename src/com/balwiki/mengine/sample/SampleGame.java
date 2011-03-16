@@ -69,11 +69,9 @@ public class SampleGame extends Engine {
 		// the same length. The BufferedImages are the frames of an animation, and
 		// the longs are the time in milliseconds that each individual frame should 
 		// be displayed. Here, we have 4 frames shown for 150 ms each.
-		player.addSprite("run", new BufferedImage[] {
-				shoaffRun1, shoaffRun2, shoaffRun3, shoaffRun2
-		}, new long[] {
-			150, 150, 150, 150
-		});
+		BufferedImage[] runSprites = new BufferedImage[] {shoaffRun1, shoaffRun2, shoaffRun3, shoaffRun2};
+		long[] runDelays = new long[] {150, 150, 150, 150};
+		player.addSprite("run", runSprites, runDelays);
 		
 		// Set sprite changes the player's graphic to the sprite matching the string
 		// given. We need to set the initial sprite for the player when the game begins.
