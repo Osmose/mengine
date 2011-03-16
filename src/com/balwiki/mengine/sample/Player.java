@@ -17,7 +17,7 @@ public class Player extends Entity {
 	
 	private double yAcc; // Current acceleration in the Y axis
 	
-	private boolean standing = true; // True if the player is standing on the ground
+	private boolean on_ground = true; // True if the player is standing on the ground
 	
 	/**
 	 * Initializes the player with the default collision box at a given
@@ -63,7 +63,7 @@ public class Player extends Entity {
 		
 		// If we are standing on the ground and press the D key, we jump by setting our
 		// Y acceleration to a negative value (and our current desired movement to match)
-		if (standing && engine.keys[KeyEvent.VK_D]) {
+		if (on_ground && engine.keys[KeyEvent.VK_D]) {
 			yAcc = -12;
 			dy = -12;
 		}
@@ -80,7 +80,7 @@ public class Player extends Entity {
 			if (yCollision == null) {
 				y += dy;
 				setSprite("jump");
-				standing = false;
+				on_ground = false;
 			} else if (yCollision != null) {
 				yAcc = 0;
 				
@@ -90,22 +90,22 @@ public class Player extends Entity {
 					// We only switch to the standing sprite if we were previously falling. If we 
 					// didn't check this, the running sprite would keep getting overridden by the 
 					// standing sprite.
-					if (!standing) {
+					if (!on_ground) {
 						setSprite("stand");
 					}
 
 					// But we're standing now.
-					standing = true;
+					on_ground = true;
 					
 					// If we're falling fast, collision might have stopped us a few pixels above the
 					// ground. To fix this, we stick our bottom to the top of the ground.
 					y = yCollision.boxY - height;
 				} else if (dy < 0) {
 					// Negative dy means we're moving up. Thus, we stick ourselves to the bottom of
-					// what we hit, change to the jumping sprite, and set that we're not standing anymore.
+					// what we hit, change to the jumping sprite, and set that we're in the air.
 					y = yCollision.boxY + yCollision.boxHeight;
 					setSprite("jump");
-					standing = false;
+					on_ground = false;
 				}
 			}
 		}
@@ -115,11 +115,11 @@ public class Player extends Entity {
 			x += dx;
 			
 			// Only run if we're on the ground
-			if (standing) {
+			if (on_ground) {
 				setSprite("run");
 			}
-		} else if (standing) {
-			// Not moving and standing? Then you will stand still!
+		} else if (on_ground) {
+			// Not moving and on the ground? Then you will stand still!
 			setSprite("stand");
 		}
 
